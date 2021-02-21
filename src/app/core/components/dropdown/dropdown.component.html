@@ -1,6 +1,18 @@
-<app-input-field [(ngModel)]="inputValue" (ngModelChange)="onInputChange($event)"></app-input-field>
-<div class="options-wrapper">
-    <ul>
-        <li *ngFor="let option of options">{{option}}</li>
-    </ul>
+<div class="field-wrappper"
+    appPopup
+    [templateRef]="dropdownTemplate"
+    [adaptToElementWidth]="true"
+    [closeUponClick]="true"
+    >
+    <app-input-field 
+    [(ngModel)]="inputValue"
+    (ngModelChange)="onInputChange($event)"
+    ></app-input-field>
+    <div class="dropdown-icon">
+        <span class="material-icons">arrow_drop_down</span>
+    </div>
 </div>
+
+<ng-template #dropdownTemplate>
+    <app-options-list [selected]="selectedOption" [options]="options" (optionChange)="onSelectionChange($event)"></app-options-list>
+</ng-template>
