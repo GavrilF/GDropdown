@@ -13,7 +13,13 @@ export enum KEYBOARD_KEY {
 })
 export class DropdownComponent implements OnInit {
 
-  @Input() selectedOption: string;
+  @Input() set selectedOption(option: string){
+    this._selectedOption = option;
+    this.inputValue = option;
+  }
+  get selectedOption(){
+    return this._selectedOption;
+  }
   @Input() set options (options: string[]){
     this.filteredOptions = options;
     this._pristineOptions = options;
@@ -25,6 +31,7 @@ export class DropdownComponent implements OnInit {
   public filteredOptions: string[] = [];
   public isOpen = false;
 
+  private _selectedOption: string;
   private _pristineOptions: string[];
 
   @HostListener('keydown', ['$event'])
@@ -43,12 +50,12 @@ export class DropdownComponent implements OnInit {
   }
 
   onInputChange(e: string){
+    this.inputValue = e;
     if(e){
       this.filteredOptions = this.filteredOptions.filter(option => option.toLocaleLowerCase().includes(e.toLocaleLowerCase()));
     }else {
       this.filteredOptions = this._pristineOptions;
     }
-
   }
 
   onSelectionClicked(option: string){
@@ -63,7 +70,9 @@ export class DropdownComponent implements OnInit {
 
   onEnterPressed(){
     if(this.filteredOptions.length){
-      this.broadcastSelectionChange(this.filteredOptions[0]);
+      if(this.selectedOption != this.inputValue){
+        this.broadcastSelectionChange(this.filteredOptions[0]);
+      }
       this.isOpen = false;
     }
   }
