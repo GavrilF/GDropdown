@@ -10,6 +10,7 @@ export class OptionsListComponent implements OnInit {
 
   @Input() options: string[];
   @Input() selected: string;
+  @Input() focused: string;
 
   @Output() optionChange: EventEmitter<string> = new EventEmitter();
 
@@ -20,6 +21,9 @@ export class OptionsListComponent implements OnInit {
 
   isSelected(option: string){
     return option === this.selected;
+  }
+  isFocused(option: string) {
+    return option === this.focused;
   }
 
   onOptionSelect(option:string){

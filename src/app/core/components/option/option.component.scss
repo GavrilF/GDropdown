@@ -13,4 +13,10 @@
             background: rgb(235, 92, 81);
         }
     }
+    &.focused-option {
+        border: 2px solid black;
+        &:hover {
+            background: rgb(235, 92, 81);
+        }
+    }
 }

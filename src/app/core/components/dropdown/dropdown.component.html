@@ -18,5 +18,5 @@
 </div>
 
 <ng-template #dropdownTemplate>
-    <app-options-list [selected]="selectedOption" [options]="filteredOptions" (optionChange)="onSelectionClicked($event)"></app-options-list>
+    <app-options-list [selected]="selectedOption" [focused]="highlightedOption" [options]="filteredOptions" (optionChange)="onSelectionClicked($event)"></app-options-list>
 </ng-template>

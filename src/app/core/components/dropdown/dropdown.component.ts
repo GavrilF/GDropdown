@@ -30,6 +30,7 @@ export class DropdownComponent implements OnInit {
   public inputValue = '';
   public filteredOptions: string[] = [];
   public isOpen = false;
+  public highlightedOption: string;
 
   private _selectedOption: string;
   private _pristineOptions: string[];
@@ -81,12 +82,14 @@ export class DropdownComponent implements OnInit {
     if(!this.filteredOptions.length){
       return
     }
-    let currIndex = this.filteredOptions.findIndex(option => option === this.selectedOption);
+    let currIndex = this.filteredOptions.findIndex(option => option === this.highlightedOption);
 
     if(currIndex + 1 > this.filteredOptions.length - 1){
-      this.broadcastSelectionChange(this.filteredOptions[0]);
+      this.highlightedOption = this.filteredOptions[0];
+      // this.broadcastSelectionChange(this.filteredOptions[0]);
     }else {
-      this.broadcastSelectionChange(this.filteredOptions[currIndex+1]);
+      this.highlightedOption = this.filteredOptions[currIndex+1];
+      // this.broadcastSelectionChange(this.filteredOptions[currIndex+1]);
     }
   }
 
@@ -94,17 +97,20 @@ export class DropdownComponent implements OnInit {
     if(!this.filteredOptions.length){
       return
     }
-    let currIndex = this.filteredOptions.findIndex(option => option === this.selectedOption);
+    let currIndex = this.filteredOptions.findIndex(option => option === this.highlightedOption);
 
     if(currIndex - 1 < 0){
-      this.broadcastSelectionChange(this.filteredOptions[this.filteredOptions.length-1]);
+      this.highlightedOption = this.filteredOptions[this.filteredOptions.length-1];
+      // this.broadcastSelectionChange(this.filteredOptions[this.filteredOptions.length-1]);
     }else {
-      this.broadcastSelectionChange(this.filteredOptions[currIndex-1]);
+      this.highlightedOption = this.filteredOptions[currIndex-1];
+      // this.broadcastSelectionChange(this.filteredOptions[currIndex-1]);
     }
   }
 
   toggleOpen(){
     this.isOpen = !this.isOpen;
+    this.highlightedOption = '';
   }
 
   onPopupToggled(opened: boolean) {

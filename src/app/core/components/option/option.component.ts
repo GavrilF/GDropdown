@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 export class OptionComponent implements OnInit {
 
   @Input() selected: boolean;
+  @Input() focused: boolean;
 
   constructor() { }
 

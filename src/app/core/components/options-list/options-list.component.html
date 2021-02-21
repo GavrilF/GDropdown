@@ -1,3 +1,6 @@
 <div class="options-list-container">
-    <app-option *ngFor="let option of options" [selected]="isSelected(option)" (click)="onOptionSelect(option)">{{option}}</app-option>
+    <app-option *ngFor="let option of options"
+     [selected]="isSelected(option)" 
+     [focused]="isFocused(option)"
+     (click)="onOptionSelect(option)">{{option}}</app-option>
 </div>

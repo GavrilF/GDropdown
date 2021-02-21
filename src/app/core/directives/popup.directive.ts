@@ -180,10 +180,6 @@ export class PopupDirective implements OnChanges {
       return;
     }
 
-    if ((target as HTMLElement).classList.contains('block-screen')) {
-      return;
-    }
-
     const targetIsNotPartOfThePopup = target !== this.getPopupElement() && !this.isChildOf(this.getPopupElement(), target as HTMLElement);
     const targetIsNotPartOfTheElementRef = target !== this.elementRef.nativeElement && !this.isChildOf(this.elementRef.nativeElement, target as HTMLElement);
 
