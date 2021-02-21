@@ -1,0 +1,9 @@
+.popup-wrapper {
+    visibility: hidden;
+    position: fixed;
+    z-index: 2147483646;
+  
+    &.popup-visible {
+      visibility: visible;
+    }
+  }

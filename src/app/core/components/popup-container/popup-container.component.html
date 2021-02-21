@@ -1,1 +1,5 @@
-<p>popup-container works!</p>
+<div class="popup-wrapper" [class.popup-visible]="visible" #popupContainer>
+    <ng-container [style.visibility]="visible ? 'visible' : 'hidden'">
+      <ng-template [ngTemplateOutlet]="templateRef" [ngTemplateOutletContext]="templateOutletContext"></ng-template>
+    </ng-container>    
+</div>
