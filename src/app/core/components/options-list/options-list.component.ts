@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-options-list',
   templateUrl: './options-list.component.html',
-  styleUrls: ['./options-list.component.scss']
+  styleUrls: ['./options-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OptionsListComponent implements OnInit {
 
