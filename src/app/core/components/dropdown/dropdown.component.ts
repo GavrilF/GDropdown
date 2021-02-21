@@ -1,31 +1,107 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+
+export enum KEYBOARD_KEY {
+  ArrowDown = 'ArrowDown',
+  ArrowUp = 'ArrowUp'
+}
 
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.scss']
+  styleUrls: ['./dropdown.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropdownComponent implements OnInit {
 
-  @Input() options: string[] = [];
   @Input() selectedOption: string;
+  @Input() set options (options: string[]){
+    this.filteredOptions = options;
+    this._pristineOptions = options;
+  }
 
   @Output() selectionChange: EventEmitter<string> = new EventEmitter();
 
   public inputValue = '';
+  public filteredOptions: string[] = [];
+  public isOpen = false;
 
-  constructor() { 
+  private _pristineOptions: string[];
+
+  @HostListener('keydown', ['$event'])
+    KeyboardEvent(event: KeyboardEvent){
+      if(event.key === KEYBOARD_KEY.ArrowUp){
+        this.selectPreviousOption();
+      } else if (event.key === KEYBOARD_KEY.ArrowDown){
+        this.selectNextOption();
+      }
+    };
+
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef) { 
   }
 
   ngOnInit(): void {
   }
 
   onInputChange(e: string){
-    console.log(e)
+    if(e){
+      this.filteredOptions = this.filteredOptions.filter(option => option.toLocaleLowerCase().includes(e.toLocaleLowerCase()));
+    }else {
+      this.filteredOptions = this._pristineOptions;
+    }
+
   }
 
-  onSelectionChange(option: string){
+  onSelectionClicked(option: string){
+    this.broadcastSelectionChange(option);
+    this.isOpen = false;
+    this.changeDetectorRef.detectChanges();
+  }
+
+  broadcastSelectionChange(option: string){
     this.selectionChange.emit(option);
+  }
+
+  onEnterPressed(){
+    if(this.filteredOptions.length){
+      this.broadcastSelectionChange(this.filteredOptions[0]);
+      this.isOpen = false;
+    }
+  }
+
+  selectNextOption(){
+    if(!this.filteredOptions.length){
+      return
+    }
+    let currIndex = this.filteredOptions.findIndex(option => option === this.selectedOption);
+
+    if(currIndex + 1 > this.filteredOptions.length - 1){
+      this.broadcastSelectionChange(this.filteredOptions[0]);
+    }else {
+      this.broadcastSelectionChange(this.filteredOptions[currIndex+1]);
+    }
+  }
+
+  selectPreviousOption(){
+    if(!this.filteredOptions.length){
+      return
+    }
+    let currIndex = this.filteredOptions.findIndex(option => option === this.selectedOption);
+
+    if(currIndex - 1 < 0){
+      this.broadcastSelectionChange(this.filteredOptions[this.filteredOptions.length-1]);
+    }else {
+      this.broadcastSelectionChange(this.filteredOptions[currIndex-1]);
+    }
+  }
+
+  toggleOpen(){
+    this.isOpen = !this.isOpen;
+  }
+
+  onPopupToggled(opened: boolean) {
+    if(opened !== this.isOpen){
+      this.isOpen = opened;
+    }
   }
 
 }
