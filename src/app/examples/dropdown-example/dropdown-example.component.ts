@@ -9,7 +9,7 @@ export class DropdownExampleComponent implements OnInit {
 
   constructor() { }
 
-  private towns: string[] = ['Sofia', 'New York', 'London', 'Paris', 'Dubai', 'Bangkok', 'Singapore', 'Seoul', 'Shanghai', 'Tokyo'];
+  public towns: string[] = ['Sofia', 'New York', 'London', 'Paris', 'Dubai', 'Bangkok', 'Singapore', 'Seoul', 'Shanghai', 'Tokyo'];
 
   ngOnInit(): void {
 
