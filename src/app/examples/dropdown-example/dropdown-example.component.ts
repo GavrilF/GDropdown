@@ -10,9 +10,14 @@ export class DropdownExampleComponent implements OnInit {
   constructor() { }
 
   public towns: string[] = ['Sofia', 'New York', 'London', 'Paris', 'Dubai', 'Bangkok', 'Singapore', 'Seoul', 'Shanghai', 'Tokyo'];
+  public currentlySelected = 'Sofia';
 
   ngOnInit(): void {
 
+  }
+
+  onSelect(selectedOption: string){
+    this.currentlySelected = selectedOption;
   }
 
 }

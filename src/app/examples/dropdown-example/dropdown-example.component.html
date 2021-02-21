@@ -1,1 +1,1 @@
-<app-dropdown [options]="towns" ></app-dropdown>
+<app-dropdown [options]="towns" [selectedOption]="currentlySelected" (selectionChange)="onSelect($event)"></app-dropdown>

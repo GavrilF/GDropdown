@@ -1,10 +1,8 @@
 .input-field-wrapper {
-    height: 28px;
-    width: inherit;
+    height: inherit;
+    width: 100%;
     display: flex;
     align-items: center;
-    border-radius: 2px;
-    border: 1px solid #656565;
 
     &:hover, &:focus-within {
         .text-field__remove-btn {
@@ -18,7 +16,6 @@
         border: none;
         -webkit-appearance: none;
         outline: none;
-        background: border-box;
         padding: 4px 8px;
     }
     .text-field__remove-btn {
