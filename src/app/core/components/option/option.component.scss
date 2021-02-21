@@ -1,0 +1,16 @@
+.option-container {
+    cursor: pointer;
+    padding: 6px;
+    background-color: var(--grey-light);
+    &:hover {
+        background-color: var(--grey-mid);
+    }
+
+    &.selected-option {
+        background: rgb(255, 99, 88);
+        color: white;
+        &:hover {
+            background: rgb(235, 92, 81);
+        }
+    }
+}
