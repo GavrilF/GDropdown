@@ -1,0 +1,36 @@
+.input-field-wrapper {
+    height: 28px;
+    width: inherit;
+    display: flex;
+    align-items: center;
+    border-radius: 2px;
+    border: 1px solid #656565;
+
+    &:hover, &:focus-within {
+        .text-field__remove-btn {
+            visibility: visible;
+        }
+    }
+
+    .text-field {
+        flex: 1 1 auto;
+        height: inherit;
+        border: none;
+        -webkit-appearance: none;
+        outline: none;
+        background: border-box;
+        padding: 4px 8px;
+    }
+    .text-field__remove-btn {
+        visibility: hidden;
+        width: 28px;
+        font-size: 20px;
+        color: #656565;
+        cursor: pointer;
+        height: inherit;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+}

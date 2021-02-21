@@ -9,9 +9,16 @@ export class DropdownComponent implements OnInit {
 
   @Input() options: string[] = [];
 
-  constructor() { }
+  public inputValue = '';
+
+  constructor() { 
+  }
 
   ngOnInit(): void {
+  }
+
+  onInputChange(e: any){
+    console.log(e)
   }
 
 }

@@ -1,1 +1,12 @@
-<p>input-field works!</p>
+<div class="input-field-wrapper">
+    <input
+    class="text-field" 
+    type="text"
+    [(ngModel)]="value"
+    [disabled]="disabled"
+    spellcheck="false"
+    >
+    <span class="material-icons text-field__remove-btn" *ngIf="value?.length > 0" (click)="removeValue()">
+        close
+    </span>
+</div>

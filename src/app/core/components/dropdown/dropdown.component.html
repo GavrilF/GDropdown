@@ -1,6 +1,4 @@
-<div class="input-field-wrapper">
-    <input type="text">
-</div>
+<app-input-field [(ngModel)]="inputValue" (ngModelChange)="onInputChange($event)"></app-input-field>
 <div class="options-wrapper">
     <ul>
         <li *ngFor="let option of options">{{option}}</li>
