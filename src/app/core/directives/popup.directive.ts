@@ -1,4 +1,4 @@
-import { ApplicationRef, ComponentRef, Directive, ElementRef, EmbeddedViewRef, EventEmitter, HostListener, Input, Output, TemplateRef } from '@angular/core';
+import { ApplicationRef, ComponentRef, Directive, ElementRef, EmbeddedViewRef, EventEmitter, HostListener, Input, OnChanges, Output, SimpleChanges, TemplateRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PopupContainerComponent } from '../components/popup-container/popup-container.component';
 import { DynamicComponentsService } from '../services/dynamic-components.service';
@@ -7,13 +7,19 @@ import { WindowEventsEmitterService } from '../services/window-events-emitter.se
 @Directive({
   selector: '[appPopup]'
 })
-export class PopupDirective {
+export class PopupDirective implements OnChanges {
 
   @Input() templateRef: TemplateRef<HTMLElement>;
   @Input() templateOutletContext: object;
   @Input() closeUponClick: boolean;
   @Input() adaptToElementWidth: boolean;
   @Input() initialPositionY: 'top' | 'bottom' = 'bottom';
+
+  /**
+   * We are going to use this when we want to manually trigger the popup state
+   */
+  @Input() useBoolToOpen: boolean = false;
+  @Input() isOpen: boolean = false; 
 
   @Output() popupToggled: EventEmitter<boolean> = new EventEmitter();
 
@@ -34,24 +40,41 @@ export class PopupDirective {
 
   @HostListener('click')
   onClick() {
-
-    const { directiveElementRef } = this.getPopupInstance();
-
-    if (this.getPopupInstance().visible) {
-      if (directiveElementRef === this.elementRef) {
-        this.visible = false;
+    if(!this.useBoolToOpen){
+      const { directiveElementRef } = this.getPopupInstance();
+  
+      if (this.getPopupInstance().visible) {
+        if (directiveElementRef === this.elementRef) {
+          this.visible = false;
+        } else {
+          this.visible = false;
+          this.updateInstance();
+          this.updatePosition();
+          this.visible = true;
+        }
       } else {
-        this.visible = false;
         this.updateInstance();
         this.updatePosition();
         this.visible = true;
       }
-    } else {
-      this.updateInstance();
-      this.updatePosition();
-      this.visible = true;
     }
+  }
 
+  ngOnChanges(simpleChanges: SimpleChanges): void {
+    if(simpleChanges?.isOpen && this.useBoolToOpen){
+      const { directiveElementRef } = this.getPopupInstance();
+  
+        if (directiveElementRef === this.elementRef) {
+          this.visible = this.isOpen;
+          this.updateInstance();
+          this.updatePosition();
+        } else {
+          this.visible = false;
+          this.updateInstance();
+          this.updatePosition();
+          this.visible = this.isOpen;
+        }
+      }
   }
 
   private appendToBody() {

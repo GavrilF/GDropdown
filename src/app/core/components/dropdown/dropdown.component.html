@@ -2,7 +2,11 @@
     appPopup
     [templateRef]="dropdownTemplate"
     [adaptToElementWidth]="true"
-    [closeUponClick]="true"
+    [useBoolToOpen]="true"
+    [isOpen]="isOpen"
+    (popupToggled)="onPopupToggled($event)"
+    (keydown.enter)="onEnterPressed()"
+    (click)="toggleOpen()"
     >
     <app-input-field 
     [(ngModel)]="inputValue"
@@ -14,5 +18,5 @@
 </div>
 
 <ng-template #dropdownTemplate>
-    <app-options-list [selected]="selectedOption" [options]="options" (optionChange)="onSelectionChange($event)"></app-options-list>
+    <app-options-list [selected]="selectedOption" [options]="filteredOptions" (optionChange)="onSelectionClicked($event)"></app-options-list>
 </ng-template>
