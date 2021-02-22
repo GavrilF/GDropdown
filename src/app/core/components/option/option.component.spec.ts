@@ -16,10 +16,27 @@ describe('OptionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(OptionComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
+  })
+
+  it('should have class selected', () => {
+    component.selected = true;
+    fixture.detectChanges();
+    
+    const optionContainerElem = fixture.nativeElement.querySelector('div');
+    
+    expect(optionContainerElem).toHaveClass('selected-option');
+  });
+
+  it('should have class focused', () => {
+    component.focused = true;
+    fixture.detectChanges();
+    
+    const optionContainerElem = fixture.nativeElement.querySelector('div');
+    
+    expect(optionContainerElem).toHaveClass('focused-option');
   });
 });
