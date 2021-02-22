@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, forwardRef, HostListener, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 
 export enum KEYBOARD_KEY {
   ArrowDown = 'ArrowDown',
@@ -10,16 +9,9 @@ export enum KEYBOARD_KEY {
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
   styleUrls: ['./dropdown.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => DropdownComponent),
-      multi: true
-    }
-  ]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DropdownComponent implements OnInit, ControlValueAccessor {
+export class DropdownComponent implements OnInit {
 
   /**
    * @param option pass as a string the current selected option
@@ -140,11 +132,6 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
       }
     };
 
-  private onChange: (value: string) => void = () => {};
-  private onTouched  = () => {};
-  disabled: boolean = false;
-  _value: string = '';
-
   constructor(private readonly changeDetectorRef: ChangeDetectorRef) { 
   }
 
@@ -184,7 +171,7 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
    * @param option option to emit
    */
   broadcastSelectionChange(option: string){
-    this.writeValue(option);
+    this.selectionChange.emit(option);
   }
 
   /**
@@ -253,37 +240,5 @@ export class DropdownComponent implements OnInit, ControlValueAccessor {
       this.isOpen = opened;
     }
   }
-
-    get value() {
-      return this._value;
-    }
-    set value(v: any) {
-      this._value = v;
-      this.onChange(v);
-    }
-
-  //Coming from ControlValueAccesor
-  writeValue(value: string): void {
-    if(value !== this._value){
-      this._value = value;
-    }
-    this.changeDetectorRef.detectChanges();
-  }
-
-  //Coming from ControlValueAccesor
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  //Coming from ControlValueAccesor
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  //Coming from ControlValueAccesor
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
-
 
 }

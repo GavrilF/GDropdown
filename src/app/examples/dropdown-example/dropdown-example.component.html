@@ -1,8 +1,6 @@
-<div [formGroup]="form">
-    <app-dropdown
-    formControlName="town"
-    [options]="sortedTowns" 
-    [shownCount]="10"
-    (addOption)="onAddOption($event)"
-    (selectionChange)="onSelect($event)"></app-dropdown>
-</div>
+<app-dropdown 
+[options]="sortedTowns" 
+[selectedOption]="currentlySelected"
+[shownCount]="10"
+(addOption)="onAddOption($event)"
+(selectionChange)="onSelect($event)"></app-dropdown>
