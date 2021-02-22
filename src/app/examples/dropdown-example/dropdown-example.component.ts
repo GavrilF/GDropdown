@@ -21,5 +21,9 @@ export class DropdownExampleComponent implements OnInit {
     this.currentlySelected = selectedOption;
     this.changeDetectorRef.detectChanges();
   }
+  onAddOption(newOption: string){
+    this.towns = [...this.towns,newOption];
+    this.currentlySelected = newOption;
+  }
 
 }

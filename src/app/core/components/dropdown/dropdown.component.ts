@@ -24,8 +24,12 @@ export class DropdownComponent implements OnInit {
     this.filteredOptions = options;
     this._pristineOptions = options;
   }
+  get options(){
+    return this._pristineOptions;
+  }
 
   @Output() selectionChange: EventEmitter<string> = new EventEmitter();
+  @Output() addOption: EventEmitter<string> = new EventEmitter();
 
   public inputValue = '';
   public filteredOptions: string[] = [];
@@ -38,8 +42,14 @@ export class DropdownComponent implements OnInit {
   @HostListener('keydown', ['$event'])
     KeyboardEvent(event: KeyboardEvent){
       if(event.key === KEYBOARD_KEY.ArrowUp){
+        if(!this.isOpen){
+          this.isOpen = true;
+        }
         this.selectPreviousOption();
       } else if (event.key === KEYBOARD_KEY.ArrowDown){
+        if(!this.isOpen){
+          this.isOpen = true;
+        }
         this.selectNextOption();
       }
     };
@@ -52,8 +62,11 @@ export class DropdownComponent implements OnInit {
 
   onInputChange(e: string){
     this.inputValue = e;
+    if(!this.isOpen){
+      this.isOpen = true;
+    }
     if(e){
-      this.filteredOptions = this.filteredOptions.filter(option => option.toLocaleLowerCase().includes(e.toLocaleLowerCase()));
+      this.filteredOptions = this.options.filter(option => option.toLocaleLowerCase().includes(e.toLocaleLowerCase()));
     }else {
       this.filteredOptions = this._pristineOptions;
     }
@@ -70,12 +83,12 @@ export class DropdownComponent implements OnInit {
   }
 
   onEnterPressed(){
-    if(this.filteredOptions.length){
-      if(this.selectedOption != this.inputValue){
-        this.broadcastSelectionChange(this.filteredOptions[0]);
-      }
-      this.isOpen = false;
+    if(this.highlightedOption){
+      this.broadcastSelectionChange(this.highlightedOption);
+    }else if (this.inputValue){
+      this.addOption.emit(this.inputValue);
     }
+    this.isOpen = false;
   }
 
   selectNextOption(){
@@ -86,10 +99,8 @@ export class DropdownComponent implements OnInit {
 
     if(currIndex + 1 > this.filteredOptions.length - 1){
       this.highlightedOption = this.filteredOptions[0];
-      // this.broadcastSelectionChange(this.filteredOptions[0]);
     }else {
       this.highlightedOption = this.filteredOptions[currIndex+1];
-      // this.broadcastSelectionChange(this.filteredOptions[currIndex+1]);
     }
   }
 
@@ -101,10 +112,8 @@ export class DropdownComponent implements OnInit {
 
     if(currIndex - 1 < 0){
       this.highlightedOption = this.filteredOptions[this.filteredOptions.length-1];
-      // this.broadcastSelectionChange(this.filteredOptions[this.filteredOptions.length-1]);
     }else {
       this.highlightedOption = this.filteredOptions[currIndex-1];
-      // this.broadcastSelectionChange(this.filteredOptions[currIndex-1]);
     }
   }
 
