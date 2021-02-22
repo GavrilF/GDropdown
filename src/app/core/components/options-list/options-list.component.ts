@@ -19,9 +19,16 @@ export class OptionsListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Used for styles in the template
+   */
   isSelected(option: string){
     return option === this.selected;
   }
+
+  /**
+   * Used for styles in the template
+   */
   isFocused(option: string) {
     return option === this.focused;
   }

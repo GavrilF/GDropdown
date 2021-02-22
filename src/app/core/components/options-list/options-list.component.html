@@ -3,4 +3,5 @@
      [selected]="isSelected(option)" 
      [focused]="isFocused(option)"
      (click)="onOptionSelect(option)">{{option}}</app-option>
+     <!-- option is passed as ng-content here, maybe it is good idea to be as an @Input, but for the purpose of the demo will leave it this way -->
 </div>

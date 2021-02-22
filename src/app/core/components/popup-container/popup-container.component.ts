@@ -18,11 +18,17 @@ export class PopupContainerComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Show the popup container
+   */
   show() {
     this.visible = true;
     this.changeDetectorRef.markForCheck();
   }
 
+  /**
+   * Hide the popup container
+   */
   hide() {
     if(this.visible === true){
       this.visible = false;
@@ -30,6 +36,10 @@ export class PopupContainerComponent implements OnInit {
     }
   }
 
+  /**
+   * This method sets what popup content will be showed
+   * @param obj Incoming instance from the popup directive
+   */
   updatePopupContent(obj: {templateRef:TemplateRef<HTMLElement>,templateOutletContext: object,directiveElementRef: ElementRef<HTMLElement>}) {
     this.templateRef = obj.templateRef;
     this.templateOutletContext = obj.templateOutletContext;
@@ -37,6 +47,9 @@ export class PopupContainerComponent implements OnInit {
     this.changeDetectorRef.detectChanges();
   }
 
+  /**
+   * Shorthand that is used in the popup directive
+   */
   getCurrentPopupElementRef(){
     return this.popupContainer.nativeElement;
   }

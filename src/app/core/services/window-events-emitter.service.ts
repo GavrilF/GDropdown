@@ -6,6 +6,9 @@ import { fromEvent, Observable, Subject } from 'rxjs';
 })
 export class WindowEventsEmitterService {
 
+  //This is Singleton Service for listening and emmiting window events
+  //Currently Supports Only Click event
+
   private windowClickEventTriggered = new Subject<Event>();
   public windowClickEventTriggered$: Observable<Event> = this.windowClickEventTriggered.asObservable();
 

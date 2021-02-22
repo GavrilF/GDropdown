@@ -35,6 +35,7 @@ export class InputFieldComponent implements OnInit, ControlValueAccessor {
   ngOnInit(): void {
   }
   
+  //Coming from ControlValueAccesor
   writeValue(value: string): void {
     if(value !== this._value){
       this._value = value;
@@ -42,14 +43,17 @@ export class InputFieldComponent implements OnInit, ControlValueAccessor {
     this.changeDetectorRef.detectChanges();
   }
 
+  //Coming from ControlValueAccesor
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
+  //Coming from ControlValueAccesor
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
+  //Coming from ControlValueAccesor
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
