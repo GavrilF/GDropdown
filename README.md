@@ -1,6 +1,15 @@
 # DropdownProject
+This Project purpose is to show dropdown component, `Please check forms-support` if you want to see the version that supports forms.
+The Project contains 2 modules but Examples module is only for demo purposes
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.1.
+#### Core Module
+* `OptionComponent` => component that shows single option.
+* `OptionListComponent` => components that shows a list of OptionComponents.
+* `InputFieldComponent`=> Input field that supports `angular forms`.
+* `DropdownComponent` => Component that has InputField and PopupDirective `supports angular forms in forms-support branch`.
+* `PopupContainer` => 'Singleton' component that is on root level and responds for rendering popup content.
+* `PopupDirective` => Communicates with PopupContainer to ensure a proper content rendering.
+* `WindowEventsEmitterService` Singleton service that broadcast window events as an observables.
 
 ## Development server
 
