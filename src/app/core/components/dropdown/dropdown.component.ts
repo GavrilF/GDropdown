@@ -33,11 +33,30 @@ export class DropdownComponent implements OnInit {
    */
 
   @Input() set options (options: string[]){
-    this.filteredOptions = options.slice();
     this._pristineOptions = options.slice();
+
+    let currentOptions = [...options];
+    if(this.shownCount){
+      currentOptions = currentOptions.slice(-this.shownCount);
+    }
+    this.filteredOptions = currentOptions.slice();
   }
   get options(){
     return this._pristineOptions;
+  }
+
+  /**
+   * Set how many entries will be showed (this will trim the )
+   * By default it is set to undefined
+   */
+  @Input() set shownCount(count: number | undefined){
+    this._snownCount = count
+    if(count){
+      this.filteredOptions = this._pristineOptions.slice(-count);
+    }
+  }
+  get shownCount(){
+    return this._snownCount;
   }
 
   /**
@@ -89,6 +108,12 @@ export class DropdownComponent implements OnInit {
 
 
   /**
+   * 
+   * @private used for get/set this.shownCount
+   */
+  private _snownCount: number | undefined;
+
+  /**
    * KeyboardEvent delegates based if key is ArrowDown/ArrowUp what option should be highlighted
    * Also if the dropdown is closed when the keypress is triggered , the dropdown will be opened
    */
@@ -120,6 +145,7 @@ export class DropdownComponent implements OnInit {
    */
   onInputChange(value: string){
     this.inputValue = value;
+    this.highlightedOption = '';
     if(!this.isOpen){
       this.isOpen = true;
     }

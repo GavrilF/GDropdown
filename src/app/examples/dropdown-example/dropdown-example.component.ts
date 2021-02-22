@@ -11,10 +11,16 @@ export class DropdownExampleComponent implements OnInit {
   constructor(private readonly changeDetectorRef: ChangeDetectorRef) { }
 
   public towns: string[] = ['Sofia', 'New York', 'London', 'Paris', 'Dubai', 'Bangkok', 'Singapore', 'Seoul', 'Shanghai', 'Tokyo'];
-  public currentlySelected = 'Sofia';
+  public currentlySelected = 'Tokyo';
+
+  /**
+   * Because the dropdown is working only with string[] for now, and dont have comparatorFuntion to do the sorting, Im going ot to the ordering here
+   * Therefore dropdown shouldn't be responsible for the ordering, only for the count of showing options
+   */
+  public sortedTowns: string[];
 
   ngOnInit(): void {
-
+    this.sortedTowns = [...this.towns];
   }
 
   /**
@@ -32,7 +38,9 @@ export class DropdownExampleComponent implements OnInit {
    * @param newOption comming from the input field in the dropdown value
    */
   onAddOption(newOption: string){
-    this.towns = [...this.towns,newOption];
+    this.towns = [...this.towns, newOption];
+    // Check sortedTowns comment
+    this.sortedTowns = [...this.towns];
     this.currentlySelected = newOption;
   }
 
