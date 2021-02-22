@@ -9,7 +9,7 @@
     (click)="toggleOpen()"
     >
     <app-input-field 
-    [ngModel]="inputValue"
+    [ngModel]="value"
     (ngModelChange)="onInputChange($event)"
     ></app-input-field>
     <div class="dropdown-icon">
@@ -18,5 +18,5 @@
 </div>
 
 <ng-template #dropdownTemplate>
-    <app-options-list [selected]="selectedOption" [focused]="highlightedOption" [options]="filteredOptions" (optionChange)="onSelectionClicked($event)"></app-options-list>
+    <app-options-list [selected]="value" [focused]="highlightedOption" [options]="filteredOptions" (optionChange)="onSelectionClicked($event)"></app-options-list>
 </ng-template>

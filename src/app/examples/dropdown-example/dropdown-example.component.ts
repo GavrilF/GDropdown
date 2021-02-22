@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dropdown-example',
@@ -7,17 +8,21 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropdownExampleComponent implements OnInit {
-
-  constructor(private readonly changeDetectorRef: ChangeDetectorRef) { }
-
   public towns: string[] = ['Sofia', 'New York', 'London', 'Paris', 'Dubai', 'Bangkok', 'Singapore', 'Seoul', 'Shanghai', 'Tokyo'];
   public currentlySelected = 'Tokyo';
+  public form: FormGroup;
 
   /**
    * Because the dropdown is working only with string[] for now, and dont have comparatorFuntion to do the sorting, Im going ot to the ordering here
    * Therefore dropdown shouldn't be responsible for the ordering, only for the count of showing options
    */
   public sortedTowns: string[];
+
+  constructor(private readonly changeDetectorRef: ChangeDetectorRef, private readonly fb: FormBuilder) {
+    this.form = fb.group({
+      town: ['']
+    })
+   }
 
   ngOnInit(): void {
     this.sortedTowns = [...this.towns];
@@ -41,7 +46,7 @@ export class DropdownExampleComponent implements OnInit {
     this.towns = [...this.towns, newOption];
     // Check sortedTowns comment
     this.sortedTowns = [...this.towns];
-    this.currentlySelected = newOption;
+    this.form.controls['town'].setValue(newOption)
   }
 
 }
